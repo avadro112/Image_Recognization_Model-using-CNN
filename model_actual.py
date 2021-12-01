@@ -1,7 +1,7 @@
 
 import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
-##tf.__version__
+##tf.__version__ it should be 2.x.x
 ##datagenrator here to format the data into input(reqquired) datastructer
 ##
 train_datagen = ImageDataGenerator(rescale = 1./255,
@@ -19,9 +19,9 @@ test_set = test_datagen.flow_from_directory('Data/test_set',
                                             batch_size = 32,
                                             class_mode = 'binary')
 
-##arted creating layers using sequence ()
+##started creating layers using sequence ()
 #code below is simple implentation of ANN aglorithms 
-##tf.keras.layers.Conv2D is used to get the inputs from the training data 
+##tf.keras.layers.Conv2D is used for filter optimization over the image matrix 
 cnn = tf.keras.models.Sequential()
 
 
@@ -36,11 +36,13 @@ cnn.add(tf.keras.layers.Dense(units=128, activation='relu'))
 cnn.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
 cnn.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
-
+##actual training 
+##below line will take sometime to train the model (it depends on machine) usually cloud implemnetation of CNN/ANN are faster.
 cnn.fit(x = training_set, validation_data = test_set, epochs = 25)
 
 
 ##here is the image top be predicated method using numpy which converts the image to array input for the algorithm above 
+#image is being imported using keras.preprocessing.image
 import numpy as np
 from keras.preprocessing import image
 test_image = image.load_img('dataset/image_to_be_predicted/cat_or_dog_1.jpg', target_size = (64, 64))
